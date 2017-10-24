@@ -35,7 +35,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'register']
+    allowed_routes = ['login', 'register','home','allblog']
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')   
 
@@ -66,33 +66,26 @@ def allblog():
 @app.route('/allblogbypost', methods=['POST', 'GET'])
 def allblogbypost():
     
-    username = session.get('username')
-    user =User.query.filter_by(username=username).first()
-    print("allblogbypost......",user)
-    if user:
-        blog = Blog.query.get(user)
-        return render_template('displayblog.html',blog=blog)
+
+    userid = request.args.get('id')
+    user = User.query.filter_by(id=userid).first()
+    blogs = Blog.query.filter_by(user=user).all()
     
-    return render_template('blogbyposts.html')  
+    return render_template('blogbyposts.html', 
+        blogs=blogs)
 
 
 @app.route("/addblog", methods=['POST','GET'])
 def addblog():
     title_error =''
     body_error =''
-    print('WE MADE IT')
     id =  request.args.get('id')
     username = session.get('username')
-
     user =User.query.filter_by(username=username).first()
 
     if request.method == 'POST':
-        print('in POST part')
         title = request.form['title']
         body = request.form['body']
-        #userid = request.form['']
-        
-
         if title == "" or body =="":
             title_error="please fill title of blog" 
             body_error ="Please Fill the body of the blog"   
@@ -106,8 +99,6 @@ def addblog():
    
     return render_template('newpost.html')  
 
-
-
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method =='POST':
@@ -118,14 +109,10 @@ def login():
         user =User.query.filter_by(username=username).first()
         if user and user.password == password:
             session['username'] = username
-            print(session)
             return redirect('/addblog')
         else:
-            flash("User password incorrect or User don't exist",'error')
-
+            flash("User password incorrect or User don't exist",'error')        
     return render_template('login.html')
-
-
 
 @app.route("/displayblog", methods=['POST','GET'])
 def displayblog():
@@ -140,18 +127,12 @@ def displayblog():
 
 @app.route("/blogbyuser", methods=['POST','GET'])
 def blogbyuser(): 
-    #username = session.get('username')
-    #blog_user = request.args.get('user')
-    user = User.query.filter_by(username=session['username']).first()
-    #user =User.query.filter_by(username=username ).first()
-    print("username.......:",user)
+    userid = request.args.get('id')
+    user = User.query.filter_by(id=userid).first()
     blogs = Blog.query.filter_by(user=user).all()
-    
     return render_template('blogbyuser.html', 
         blogs=blogs)
         
-
- 
 
 @app.route('/register',methods = ['POST','GET'])
 def register():

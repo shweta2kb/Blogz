@@ -3,7 +3,7 @@
     <form action="/blogbyuser" method="post"></form>
 
         {% block content %}
-        blog User !!
+    
         {% for blog in blogs %}
 
        
@@ -12,4 +12,7 @@
             <p><i font-size:"70%">written by <a href="/blogbyuser?userid={{blog.user.id}}">{{blog.user.username}}</a></i></p>
             <hr />
         {% endfor %}
+    
+       
+       
         {% endblock %}

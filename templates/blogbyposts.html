@@ -3,14 +3,11 @@
     <form action="/allblog" method="post"></form>
 
         {% block content %}
-
-        
-    in All blog method
       
         {% for blog in blog_list %}
             <h2 style="color:blue"><a href="/displayblog?id={{ blog.id }}" method="get">{{ blog.title }}</a></h2>
             <p>{{ blog.body }}</p>
-            <p><i font-size:"70%">written by <a href="/allblogbypost?userid={{blog.user.id}}">{{blog.user.username}}</a></i></p>
+            <p><i font-size:"70%">written by <a href="/blogbyuser?userid={{blog.user.id}}">{{blog.user.username}}</a></i></p>
             <hr />
         {% endfor %}
     
