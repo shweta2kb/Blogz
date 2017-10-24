@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+    <form action="/displayblog" method="post"></form>
+
+        {% block content %}
+
+        
+
+               
+                <h3>{{ blog.title }}</h3>
+                <br>
+                <h3>{{ blog.body }}</h3>
+                <br>
+                <p><i font-size:"70%">written by <a href="/displayblog?userid={{blog.user.id}}">{{blog.user.username}}</a></i></p>
+
+       
+        {% endblock %}

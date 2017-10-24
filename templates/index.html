@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+    <form action="/" method="post">
+        <input type="hidden" name="id" value="{{id}}" />
+
+ {% block content %}
+
+    {% for blog in blogs %}
+        
+        <li>
+                <a href="/displayblog?id={{blog.id}}">{{blog.title}}</a><br>
+                     {{blog.body}}<br>
+                     {{blog.username}}
+        </li>
+        
+    {% endfor %}    
+ {% endblock %}

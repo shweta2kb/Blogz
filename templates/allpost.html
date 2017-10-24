@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+    <form action="/" method="post">
+        <input type="hidden" name="id" value="{{id}}" />
+
+        <h1> blog users ! </h1>
+
+
+    {% for blog in blogs %}
+        
+        <li>
+                {{blog.username}}
+
+        </li>
+        
+    {% endfor %}  
+{% block content %}     
+ {% endblock %}

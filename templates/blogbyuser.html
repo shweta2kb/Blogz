@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+    <form action="/blogbyuser" method="post"></form>
+
+        {% block content %}
+        blog User !!
+        {% for blog in blogs %}
+
+       
+            <h2 style="color:blue"><a href="/blogbyuser?id={{ blog.id }}">{{ blog.title }}</a></h2>
+            <p>{{ blog.body }}</p>
+            <p><i font-size:"70%">written by <a href="/blogbyuser?userid={{blog.user.id}}">{{blog.user.username}}</a></i></p>
+            <hr />
+        {% endfor %}
+        {% endblock %}
